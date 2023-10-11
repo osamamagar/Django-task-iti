@@ -1,0 +1,51 @@
+{% extends "products/layouts/base.html" %}
+{% load static %}
+
+{%block Title%}
+Search Page
+{%endblock %}
+
+{% block content %}
+<h1>Welcome to the Search Page</h1>
+
+{% endblock %}
+
+{% block table %}
+<table class="table container table-striped text-center">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Descriptions</th>
+            <th>Price $</th>
+            <th>Images</th>
+            <th>Action</th>
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+                <img src="{% static 'products/images/'|add:product.image %}" class="img-fluid" style="max-width: 400px;">
+            </td>                
+
+            <td><br/>
+                <a href="{% url 'products:product_detail' product.id %}" class="btn btn-primary my-4">Details</a>
+                <a href="{% url 'products:delete' product.id %}" class="btn btn-danger ">Delete</a>
+
+            </td>
+   
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
