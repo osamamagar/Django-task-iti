@@ -1,5 +1,6 @@
 from django.shortcuts import render ,get_object_or_404 ,redirect
 from django.urls import reverse
+from django.http import HttpResponse
 from .models import Product 
 
 
@@ -35,3 +36,36 @@ def search(request):
     products = Product.objects.filter(name__icontains=query)  
     return render(request, 'products/search.html', {'products': products, 'query': query})
  
+def create_product(request):
+
+    if request.method =='POST':
+        name = request.POST['name']
+        price = request.POST['price']
+        description = request.POST['description']
+        image = request.POST['image']
+        if not name or not price:
+            return render(request, 'products/create_product.html')
+        
+
+        try:
+            price = float(price) 
+        except ValueError:
+            return render(request, 'products/create_product.html')
+
+
+
+        addProduct = Product()
+        addProduct.name=name
+        addProduct.price=price
+        addProduct.description=description
+        addProduct.image=image
+        addProduct.save()
+
+        url = reverse('products:product_detail', args=[addProduct.id])
+        return redirect(url)
+    else:
+        return render(request, 'products/create_product.html')
+
+    
+    
+

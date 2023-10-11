@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Home ,contact_us ,about_us , product_detail ,delete ,search
+from .views import Home ,contact_us ,about_us , product_detail ,delete ,search ,create_product
 
 
 app_name = 'products'
@@ -11,6 +11,7 @@ urlpatterns = [
     path('product_detail/<int:id>', product_detail, name='product_detail'),
     path('product/<int:id>/delete', delete, name='delete'),
     path('search/' , search ,name="search" ),
+    path('create_product/',create_product,name="create_product")
 
 
 ]

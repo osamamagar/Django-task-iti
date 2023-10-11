@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class Product(models.Model):
     name = models.CharField("Name", max_length=1024, null=True)
@@ -10,4 +11,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_show_url(self):
+        return reverse('products:product_detail', args=[self.id])
         
+    def get_delete_url(self):
+        return reverse('products:delete', args=[self.id])

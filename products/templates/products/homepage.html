@@ -3,6 +3,7 @@
 
 
 
+
 {%block Title%}
 Home
 {%endblock %}
@@ -10,9 +11,10 @@ Home
 {% block content %}
 <h1>This is Home Page</h1>
 {% endblock %}
-
 {% block table %}
-<table class="table container table-striped text-center">
+<a href="{% url 'products:create_product'%}" class="btn btn-primary my-4">Add Product</a>
+
+<table class="table container table-striped my-4 text-center">
     <thead>
         <tr>
             <th>ID</th>
@@ -38,8 +40,10 @@ Home
             </td>                
 
             <td><br/>
-                <a href="{% url 'products:product_detail' product.id %}" class="btn btn-primary my-4">Details</a>
-                <a href="{% url 'products:delete' product.id %}" class="btn btn-danger ">Delete</a>
+                {% comment %} <a href="{% url 'products:product_detail' product.id %}" class="btn btn-primary my-4">Details</a> {% endcomment %}
+                <a href="{{product.get_show_url}}" class="btn btn-primary my-4">Details</a>
+                <a href="{{product.get_delete_url}}" class="btn btn-danger ">Delete</a>
+                {% comment %} <a href="{% url 'products:delete' product.id %}" class="btn btn-danger ">Delete</a> {% endcomment %}
 
             </td>
    
