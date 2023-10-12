@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-# from category.models import Category
 
 
 
@@ -13,6 +12,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     # category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
 
 
 
