@@ -2,6 +2,7 @@ from django.shortcuts import render ,get_object_or_404 ,redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from .models import Product 
+from .forms import ProductFormEdit
 
 
 
@@ -42,7 +43,7 @@ def create_product(request):
         name = request.POST['name']
         price = request.POST['price']
         description = request.POST['description']
-        image = request.POST['image']
+        image = request.FILES ['image']
         if not name or not price:
             return render(request, 'products/create_product.html')
         
@@ -66,6 +67,38 @@ def create_product(request):
     else:
         return render(request, 'products/create_product.html')
 
-    
+
+# def create_product(request):
+#     if request.method == 'POST':
+#         form = ProductForm(request.POST, request.FILES)
+
+#         if form.is_valid():
+#             product = form.save()
+            
+#             return redirect('products:product_detail', product.id)
+#         else:
+#             return render(request, 'products/create_product.html', {'form': form})
+#     else:
+#         form = ProductForm()
+#         return render(request, 'products/create_product.html', {'form': form})
+
+
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+
+    if request.method == 'POST':
+        form = ProductFormEdit(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('products:home')
+
+    else:
+        form = ProductFormEdit(instance=product)
+
+    return render(request, 'products/edit_product.html', {'product': product, 'form': form})
+
+
+
+
     
 

@@ -36,13 +36,16 @@ Home
             <td>{{ product.description }}</td>
             <td>{{ product.price }}</td>
             <td>
-                <img src="{% static 'products/images/'|add:product.image %}" class="img-fluid" style="max-width: 400px;">
+                {% comment %} <img src="{% static 'products/images/'|add:product.image %}" class="img-fluid" style="max-width: 400px;"> {% endcomment %}
+                <img src="{{ product.image.url }}" class="img-fluid" style="max-width: 400px;">
+
             </td>                
 
             <td><br/>
                 {% comment %} <a href="{% url 'products:product_detail' product.id %}" class="btn btn-primary my-4">Details</a> {% endcomment %}
                 <a href="{{product.get_show_url}}" class="btn btn-primary my-4">Details</a>
-                <a href="{{product.get_delete_url}}" class="btn btn-danger ">Delete</a>
+                <a href="{% url 'products:edit_product' product.id %}" class="btn btn-warning ">Edit</a>
+                <a href="{{product.get_delete_url}}" class="btn btn-danger my-4 ">Delete</a>
                 {% comment %} <a href="{% url 'products:delete' product.id %}" class="btn btn-danger ">Delete</a> {% endcomment %}
 
             </td>
