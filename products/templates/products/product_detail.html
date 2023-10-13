@@ -13,13 +13,6 @@
       <a href="{% url 'products:home' %}" class="btn btn-primary my-4">Back Home</a>
     </div>
     <h2>Related Products</h2>
-<ul>
-    {% for related_product in related_products %}
-    <li>
-        <a href="{% url 'products:product_detail' related_product.id %}">{{ related_product.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
 
   </div>
 {% endblock %}
