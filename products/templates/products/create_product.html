@@ -1,0 +1,42 @@
+{% extends "products/layouts/base.html" %}
+{% load static %}
+
+{%block Title%}
+Create Product 
+{%endblock %}
+
+{% block content %}
+<h1>Welcome to the Create Product Page</h1>
+{% endblock %}
+
+{% block table %}
+<h2>Create a New Product</h2>
+<form method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <label for="name">Name:</label>
+    <input type="text" name="name" required><br><br>
+
+    <label for="price">Price:</label>
+    <input type="number" name="price"  required><br><br>
+
+    <label for="description">Description:</label>
+    <textarea name="description" rows="4" cols="50"></textarea><br><br>
+
+    <label for="section_id">Section:</label>
+    <select name="section_id" required>
+        <option value="" disabled selected>Select a Section</option>
+        {% for section in sections %}
+            <option value="{{ section.id }}">{{ section.name }}</option>
+        {% endfor %}
+    </select><br><br>
+        
+    <label for="image">Image:</label>
+    <input type="file" name="image" accept="image/*" required><br><br>
+
+    <input type="submit" value="Create Product">
+</form>
+
+
+{% endblock  %}
