@@ -17,7 +17,10 @@ def about_us(request):
 
 def product_detail(request, id):
     product = get_object_or_404(Product, pk=id)
-    return render(request, 'products/product_detail.html', {'product': product})
+    related_products = Product.objects.filter(section=product.section).exclude(id=id)
+    
+
+    return render(request, 'products/product_detail.html', {'product': product, 'related_products': related_products})
 
 
 

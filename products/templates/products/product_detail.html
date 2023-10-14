@@ -10,6 +10,16 @@
       <img src="{{ product.image.url }}" class="img-fluid" style="max-width: 400px;">
       <p class="card-text">{{ product.description }}</p>
       <p class="card-text">Price: ${{ product.price }}</p>
+
+      <!-- Display the product's section if available -->
+      <p class="card-text">
+        {% if product.section %}
+          Section: {{ product.section.name }}
+        {% else %}
+          Section: No section assigned yet
+        {% endif %}
+      </p>
+
       <a href="{% url 'products:home' %}" class="btn btn-primary my-4">Back Home</a>
     </div>
     <h2>Related Products</h2>
