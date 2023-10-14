@@ -7,12 +7,18 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">{{ product.name }}</h5>
-      <img src="{{product.image.url}}" class="img-fluid" style="max-width: 400px;">
+      <img src="{{ product.image.url }}" class="img-fluid" style="max-width: 400px;">
       <p class="card-text">{{ product.description }}</p>
       <p class="card-text">Price: ${{ product.price }}</p>
       <a href="{% url 'products:home' %}" class="btn btn-primary my-4">Back Home</a>
     </div>
     <h2>Related Products</h2>
-
+    <ul>
+      {% for related_product in related_products %}
+        <li>
+          <a href="{% url 'products:product_detail' related_product.id %}">{{ related_product.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
   </div>
 {% endblock %}

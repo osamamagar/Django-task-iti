@@ -1,7 +1,9 @@
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render ,get_object_or_404 ,redirect
 from django.urls import reverse
 from .models import Product 
-from .forms import ProductFormEdit
+from sections.models import Section
+from .forms import ProductForm
 
 
 
@@ -37,67 +39,73 @@ def search(request):
     return render(request, 'products/search.html', {'products': products, 'query': query})
  
 def create_product(request):
+    sections = Section.objects.all()
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        price = request.POST.get('price')
+        description = request.POST.get('description')
+        image = request.FILES.get('image')
 
-    if request.method =='POST':
-        name = request.POST['name']
-        price = request.POST['price']
-        description = request.POST['description']
-        image = request.FILES ['image']
         if not name or not price:
             return render(request, 'products/create_product.html')
-        
 
         try:
-            price = float(price) 
+            price = float(price)
         except ValueError:
             return render(request, 'products/create_product.html')
 
-
-
         addProduct = Product()
-        addProduct.name=name
-        addProduct.price=price
-        addProduct.description=description
-        addProduct.image=image
+        addProduct.name = name
+        addProduct.price = price
+        addProduct.description = description
+        addProduct.image = image
+
+        # Check if a section is specified in the form.
+        section_id = request.POST.get('section_id')
+        if section_id:
+            try:
+                section = Section.objects.get(pk=section_id)
+                addProduct.section = section
+            except Section.DoesNotExist:
+                return HttpResponseBadRequest("Invalid section ID")
+
         addProduct.save()
 
         url = reverse('products:product_detail', args=[addProduct.id])
         return redirect(url)
     else:
-        return render(request, 'products/create_product.html')
+        return render(request, 'products/create_product.html', {'sections': sections})
 
 
-# def create_product(request):
+# def create_product(request, section_id):
 #     if request.method == 'POST':
 #         form = ProductForm(request.POST, request.FILES)
-
 #         if form.is_valid():
-#             product = form.save()
-            
+#             # Assuming your form includes fields for name, price, and description
+#             name = form.cleaned_data['name']
+#             price = form.cleaned_data['price']
+#             description = form.cleaned_data['description']
+
+#             # Create a new product and associate it with the section
+#             product = Product(name=name, price=price, description=description, section_id=section_id)
+#             product.save()
+
 #             return redirect('products:product_detail', product.id)
-#         else:
-#             return render(request, 'products/create_product.html', {'form': form})
 #     else:
 #         form = ProductForm()
-#         return render(request, 'products/create_product.html', {'form': form})
+
+#     return render(request, 'products/create_product.html', {'form': form})
+
 
 
 def edit_product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-
     if request.method == 'POST':
-        form = ProductFormEdit(request.POST, request.FILES, instance=product)
+        form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('products:home')
-
+            return redirect('products:product_detail', product.id)
     else:
-        form = ProductFormEdit(instance=product)
+        form = ProductForm(instance=product)
 
-    return render(request, 'products/edit_product.html', {'product': product, 'form': form})
-
-
-
-
-    
-
+    return render(request, 'products/edit_product.html', {'form': form, 'product': product})
