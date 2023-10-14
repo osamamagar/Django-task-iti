@@ -4,6 +4,7 @@ from django.urls import reverse
 from .models import Product 
 from sections.models import Section
 from .forms import ProductForm
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -28,7 +29,7 @@ def Home(request):
     products = Product.objects.all().order_by('id')
     return render(request, 'products/homepage.html',context={"products":products})
 
-
+@login_required()
 def delete(request, id):
     product = Product.objects.get(id=id)
     product.delete()    
@@ -41,6 +42,7 @@ def search(request):
     products = Product.objects.filter(name__icontains=query)  
     return render(request, 'products/search.html', {'products': products, 'query': query})
  
+@login_required()
 def create_product(request):
     sections = Section.objects.all()
     if request.method == 'POST':
@@ -100,7 +102,7 @@ def create_product(request):
 #     return render(request, 'products/create_product.html', {'form': form})
 
 
-
+@login_required()
 def edit_product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
