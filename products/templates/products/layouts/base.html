@@ -29,9 +29,10 @@
             <a class="nav-link active" aria-current="page" href='/products/about_us'>About Us</a>
           </li>
           {% if user.id %}
-          <li class="nav-item">
-            {{user}}
-          </li>
+          <li class="nav-item mx-3">
+            <a class="nav-link active{% if user.is_authenticated %} disabled{% endif %}" href="">{% if user.is_authenticated %}{{ user }}{% else %}Guest{% endif %}</a>
+        </li>
+        
           <li class="nav-item mx-3">
             <a class="nav-link active" href="{% url "logout" %}">Logout</a>
           </li>
