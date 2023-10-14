@@ -4,31 +4,35 @@
 {% block title %}Product Details{% endblock %}
 {% block content %}
   <h1>Product Details</h1>
-  <div class="card">
+{% endblock %}
+
+{% block table %}
+<div class="container" style="display: flex; justify-content: space-between;">
+  <div class="card text-center w-50 col-6 mx-4">
     <div class="card-body">
       <h5 class="card-title">{{ product.name }}</h5>
       <img src="{{ product.image.url }}" class="img-fluid" style="max-width: 400px;">
       <p class="card-text">{{ product.description }}</p>
       <p class="card-text">Price: ${{ product.price }}</p>
-
-      <!-- Display the product's section if available -->
-      <p class="card-text">
-        {% if product.section %}
-          Section: {{ product.section.name }}
-        {% else %}
-          Section: No section assigned yet
-        {% endif %}
-      </p>
-
       <a href="{% url 'products:home' %}" class="btn btn-primary my-4">Back Home</a>
     </div>
-    <h2>Related Products</h2>
-    <ul>
-      {% for related_product in related_products %}
-        <li>
-          <a href="{% url 'products:product_detail' related_product.id %}">{{ related_product.name }}</a>
-        </li>
-      {% endfor %}
-    </ul>
   </div>
+  <div class="card text-center col-6 mx-6">
+    <div class="card-body">
+      <h2>Related Products</h2>
+      {% if product.section %}
+        Section: {{ product.section.name }}
+      {% else %}
+        Section: No section assigned yet
+      {% endif %}
+      <ul>
+        {% for related_product in related_products %}
+          <li>
+            <a href="{% url 'products:product_detail' related_product.id %}">{{ related_product.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
 {% endblock %}

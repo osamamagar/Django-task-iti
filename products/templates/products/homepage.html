@@ -44,10 +44,10 @@ Home
 
             </td>                
 
-            <td><br/>
+            <td>
                 {% comment %} <a href="{% url 'products:product_detail' product.id %}" class="btn btn-primary my-4">Details</a> {% endcomment %}
                 <a href="{{product.get_show_url}}" class="btn btn-primary ">Details</a>
-                <a href="{% url 'products:edit_product' product.id %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'products:edit_product' product.id %}" class="btn btn-warning my-1">Edit</a>
                 <a href="{{product.get_delete_url}}" class="btn btn-danger  ">Delete</a>
                 {% comment %} <a href="{% url 'products:delete' product.id %}" class="btn btn-danger ">Delete</a> {% endcomment %}
 

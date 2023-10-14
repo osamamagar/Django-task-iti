@@ -16,11 +16,5 @@ class Section(models.Model):
     def get_all_sections(cls):
         return  cls.objects.all()
 
-
-    # @classmethod
-    # def get_index_url(cls):
-    #     return reverse('tracks.index')
-
-
     def get_image_url(self):
         return f"/media/{self.image}"
