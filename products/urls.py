@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import Home ,contact_us ,about_us , product_detail ,delete ,search ,create_product ,edit_product
+from django.contrib.auth.decorators import login_required
 
 
 app_name = 'products'

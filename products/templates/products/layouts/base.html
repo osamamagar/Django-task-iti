@@ -20,13 +20,13 @@
       <div class="collapse navbar-collapse" id="navbarScroll">
         <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="../home">Home</a>
+            <a class="nav-link active" aria-current="page" href="/products/home">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="../contact_us">Contact US</a>
+            <a class="nav-link active" aria-current="page" href="/products/contact_us">Contact US</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href='../about_us'>About Us</a>
+            <a class="nav-link active" aria-current="page" href='/products/about_us'>About Us</a>
           </li>
           {% if user.id %}
           <li class="nav-item">
@@ -35,10 +35,14 @@
           <li class="nav-item mx-3">
             <a class="nav-link active" href="{% url "logout" %}">Logout</a>
           </li>
+          
           {% else %}
           <li class="nav-item">
             <a class="nav-link active" href="{% url 'login' %}">Login</a>
           </li>
+          {% comment %} <li class="nav-item mx-3">
+            <a class="nav-link active" href="{% url "registration" %}">Register</a>
+          </li>  {% endcomment %}
 
 
           {% endif %}
