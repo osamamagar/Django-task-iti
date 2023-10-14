@@ -33,7 +33,8 @@ Search Page
             <td>{{ product.description }}</td>
             <td>{{ product.price }}</td>
             <td>
-                <img src="{% static 'products/images/'|add:product.image %}" class="img-fluid" style="max-width: 400px;">
+                <img src="{{ product.image.url }}" class="img-fluid" style="max-width: 110px;">
+                {% comment %} <img src="{% static 'products/images/'|add:product.image %}" class="img-fluid" style="max-width: 400px;"> {% endcomment %}
             </td>                
 
             <td><br/>

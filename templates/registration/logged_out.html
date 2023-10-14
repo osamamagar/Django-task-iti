@@ -1,0 +1,19 @@
+{% extends "products/layouts/base.html" %}
+{% load static %}
+
+{% block title %}
+Logout
+{% endblock  %}
+
+{% block content %}
+<h3>Logout , Thank You</h3>
+{% endblock  %}
+
+{% block table %}
+<div class="text-center">
+    <h2>If You Want Login Again click Here !</h2>
+    <a class="btn btn-info my-4" href="{% url 'login' %}">Login </a><br/>
+
+</div>
+{% endblock  %}
+

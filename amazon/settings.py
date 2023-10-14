@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'sections.apps.SectionsConfig',
     'posts.apps.PostsConfig',
+    'accounts.apps.AccountsConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -58,7 +60,7 @@ ROOT_URLCONF = 'amazon.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR,'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
