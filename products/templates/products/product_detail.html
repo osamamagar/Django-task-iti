@@ -17,9 +17,9 @@
       <a href="{% url 'products:home' %}" class="btn btn-primary my-4">Back Home</a>
     </div>
   </div>
-  <div class="card text-center col-6 mx-6">
+  <div class="card  col-6 mx-3">
     <div class="card-body">
-      <h2>Related Products</h2>
+      <h2>Other Products in this sections</h2>
       {% if product.section %}
         Section: {{ product.section.name }}
       {% else %}

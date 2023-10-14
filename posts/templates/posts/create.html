@@ -1,0 +1,18 @@
+{% extends 'products/layouts/base.html' %}
+
+{% load static %}
+
+{% block title %}Edit Post {% endblock %}
+{% block table %}
+
+    <h1> Add new  POST </h1>
+    <form method="post"  enctype="multipart/form-data">
+        {% csrf_token %}
+  {{form}}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script src="{% static  'sections/js/script.js' %}">
+
+</script>
+{% endblock %}

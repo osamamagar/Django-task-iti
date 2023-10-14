@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products.apps.ProductsConfig',
     'sections.apps.SectionsConfig',
+    'posts.apps.PostsConfig',
 ]
 
 MIDDLEWARE = [

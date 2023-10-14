@@ -1,0 +1,28 @@
+{% extends 'products/layouts/base.html' %}
+
+{% load static %}
+
+{% block title %}Product Index {% endblock %}
+{% block table %}
+    <h1> Welcome to Posts index </h1>
+    <a href="{% url 'posts.create' %}" class="btn btn-dark">Add new Post </a>
+    <table class="table">
+            <tr> <th> ID</th>  <th> Title</th> <th>Image </th>
+                <th> Show </th> <th>Edit</th> <th> Delete</th>
+            </tr>
+        {% comment %} {{posts}}
+        {{object_list}} {% endcomment %}
+         {% for post in object_list %}
+            <tr>
+                <td>{{post.id }}</td>
+                 <td>{{post.title }}</td>
+                 <td><img src="{{post.image.url}}" width="100" height="100" > </td>
+                <td><a href="{{post.show.url}}" class="btn btn-info">  Show </a> </td>
+                <td><a href="{{post.edit.url}}" class="btn btn-warning">  Edit </a> </td>
+                 <td><a href="{{post.delete.url}}" class="btn btn-danger">  Delete </a> </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+{% endblock %}
