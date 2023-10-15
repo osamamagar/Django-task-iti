@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import Home ,contact_us ,about_us , product_detail ,delete ,search ,create_product ,edit_product
-from django.contrib.auth.decorators import login_required
+from .views import Home ,contact_us ,about_us , product_detail ,delete ,search 
+from .views import create_product ,edit_product 
+
 
 
 app_name = 'products'
@@ -15,8 +16,5 @@ urlpatterns = [
     path('search/' , search ,name="search" ),
     path('create_product/',create_product,name="create_product"),
     path('edit/<int:product_id>/', edit_product, name='edit_product'),
-
-
-
 
 ]

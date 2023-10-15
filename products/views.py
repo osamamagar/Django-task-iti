@@ -1,10 +1,16 @@
-from django.http import HttpResponseBadRequest
+from telnetlib import LOGOUT
+from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import render ,get_object_or_404 ,redirect
 from django.urls import reverse
 from .models import Product 
 from sections.models import Section
-from .forms import ProductForm
+from .forms import ProductForm, ProfileForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
+
+
+
 
 
 
@@ -29,13 +35,24 @@ def Home(request):
     products = Product.objects.all().order_by('id')
     return render(request, 'products/homepage.html',context={"products":products})
 
-@login_required()
+# @login_required()
+# def delete(request, id):
+#     product = Product.objects.get(id=id)
+#     product.delete()    
+#     url = reverse('products:home')
+#     return redirect(url)
+
+@login_required
 def delete(request, id):
-    product = Product.objects.get(id=id)
-    product.delete()    
+    product = get_object_or_404(Product, id=id)
+
+    # Check if the user is the owner of the product
+    if product.created_by != request.user:
+        return HttpResponseForbidden("You do not have permission to delete this product.")
+
+    product.delete()
     url = reverse('products:home')
     return redirect(url)
-
 
 def search(request):
     query = request.GET.get('q', '') 
@@ -45,6 +62,7 @@ def search(request):
 @login_required()
 def create_product(request):
     sections = Section.objects.all()
+
     if request.method == 'POST':
         name = request.POST.get('name')
         price = request.POST.get('price')
@@ -65,7 +83,6 @@ def create_product(request):
         addProduct.description = description
         addProduct.image = image
 
-        # Check if a section is specified in the form.
         section_id = request.POST.get('section_id')
         if section_id:
             try:
@@ -74,6 +91,8 @@ def create_product(request):
             except Section.DoesNotExist:
                 return HttpResponseBadRequest("Invalid section ID")
 
+
+        addProduct.created_by = request.user
         addProduct.save()
 
         url = reverse('products:product_detail', args=[addProduct.id])
@@ -102,9 +121,27 @@ def create_product(request):
 #     return render(request, 'products/create_product.html', {'form': form})
 
 
-@login_required()
+# @login_required()
+# def edit_product(request, product_id):
+#     product = get_object_or_404(Product, pk=product_id)
+#     if request.method == 'POST':
+#         form = ProductForm(request.POST, request.FILES, instance=product)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('products:product_detail', product.id)
+#     else:
+#         form = ProductForm(instance=product)
+
+#     return render(request, 'products/edit_product.html', {'form': form, 'product': product})
+
+@login_required
 def edit_product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
+
+    # Check if the user is the owner of the product
+    if product.created_by != request.user:
+        return HttpResponseForbidden("You do not have permission to edit this product.")
+
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
@@ -114,3 +151,36 @@ def edit_product(request, product_id):
         form = ProductForm(instance=product)
 
     return render(request, 'products/edit_product.html', {'form': form, 'product': product})
+
+
+@login_required
+def profile_view(request):
+    user = request.user  
+    return render(request, 'profile.html', {'user': user})
+
+@login_required
+def edit_profile_view(request):
+    user = request.user
+
+    if request.method == 'POST':
+        profile_form = ProfileForm(request.POST, instance=user.profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Profile update failed. Please correct the errors.')
+
+    return render(request, 'edit_profile.html', {'user': user})
+
+@login_required
+def delete_profile_view(request):
+    user = request.user
+
+    if request.method == 'POST':
+        user.delete()
+        LOGOUT(request)
+        messages.success(request, 'Your profile has been deleted successfully.')
+        return redirect('login')
+
+    return render(request, 'delete_profile.html', {'user': user})

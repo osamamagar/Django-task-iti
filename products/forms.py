@@ -15,4 +15,6 @@ class ProductForm(forms.ModelForm):
 #     section = forms.ModelChoiceField(
 #         Section.get_all_sections(),required=False
 #     )
-
+class ProfileForm(forms.Form):
+    first_name = forms.CharField(max_length=100, required=False)
+    last_name = forms.CharField(max_length=100, required=False)

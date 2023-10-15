@@ -1,0 +1,26 @@
+{% extends 'products/layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Welcome, {{ user.username }}</h1>
+{% endblock %}
+{% block table %}
+<div>
+    <p class="text-center">
+        <a class="btn btn-primary" href="/accounts/edit_profile/">Edit Your Profile</a> 
+        <a class="btn btn-primary" href="/accounts/delete_profile/">Delete Your Profile</a>
+    </p>
+</div>
+
+    <h2>Products Created by {{user  }}</h2><br/>
+    <ul>
+        {% for product in user_data %}
+        <ul>
+            <li><p> Name Of Product :<a href="{{product.get_show_url}}"> <b>{{product.name}} </b> </a> - Price of Product : <b>{{product.price}}  </b> -<img src="{{ product.image.url }}" class="img-fluid" style="max-width: 110px;">
+            </p></li>
+        </ul>
+
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends "products/layouts/base.html" %}
+ {% extends "products/layouts/base.html" %}
 {% load static %}
 
 {% block title %}Product Details{% endblock %}
@@ -14,12 +14,23 @@
       <img src="{{ product.image.url }}" class="img-fluid" style="max-width: 400px;">
       <p class="card-text">{{ product.description }}</p>
       <p class="card-text">Price: ${{ product.price }}</p>
+      
+        {% comment %} <p class="card-text">Created by: {{ product.created_by.username }}</p> {% endcomment %}
+        <p class="card-text">
+          Created by:
+          {% if product.created_by == request.user %}
+            {{ product.created_by.username }}
+          {% else %}
+            Someone else
+          {% endif %}
+        </p>
+                
       <a href="{% url 'products:home' %}" class="btn btn-primary my-4">Back Home</a>
     </div>
   </div>
   <div class="card  col-6 mx-3">
     <div class="card-body">
-      <h2>Other Products in this sections</h2>
+      <h2>Other Products in this section</h2>
       {% if product.section %}
         Section: {{ product.section.name }}
       {% else %}
@@ -30,7 +41,9 @@
           <li>
             <a href="{% url 'products:product_detail' related_product.id %}">{{ related_product.name }}</a>
           </li>
+          
         {% endfor %}
+        
       </ul>
     </div>
   </div>

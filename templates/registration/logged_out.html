@@ -13,7 +13,11 @@ Logout
 <div class="text-center">
     <h2>If You Want Login Again or Register click Here !</h2>
     <a class="btn btn-info my-4" href="{% url 'login' %}">Login </a><br/>
-    {% comment %} <a class="btn btn-success my-4" href="{% url 'register' %}">Register </a> {% endcomment %}
+    <p>
+        Don't have an account? 
+        <a href="/accounts/register/">Register here!</a>
+
+    </p>
 
 </div>
 {% endblock  %}

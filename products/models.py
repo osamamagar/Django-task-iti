@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from sections.models import Section
+from django.contrib.auth.models import User
+
 
 
 
@@ -9,9 +11,12 @@ class Product(models.Model):
     description = models.TextField("Description", null=True)
     price = models.DecimalField("Price", decimal_places=2, max_digits=8)
     image = models.ImageField(upload_to='products/images/' ,null=False , blank=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateField(auto_now=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
+    # updated_at = models.DateField(auto_now=True)
     section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
+
 
 
 
